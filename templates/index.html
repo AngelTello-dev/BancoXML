@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Tarjeta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .contenedor {
+            width: 100%;
+            max-width: 500px;  /* Reducido para no verse tan ancho */
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .mensaje {
+            color: red;
+            font-size: 16px;
+            margin: 15px 0;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"], input[type="password"], input[type="number"] {
+            width: 90%;  /* Reducido para mejorar el diseño */
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            text-align: center;  /* Centrar texto dentro de los campos */
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 90%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #eee;
+            margin: 20px 0;
+        }
+        .cuenta-detalles {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .cuenta-detalles p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Verificación de Tarjeta</h1>
+
+        <!-- Formulario para ingresar número de tarjeta -->
+        <form method="POST">
+            <label for="tarjeta">Número de Tarjeta:</label><br>
+            <input type="text" id="tarjeta" name="tarjeta" required><br><br>
+            <button type="submit">Verificar</button>
+        </form>
+
+        <hr>
+
+        <!-- Mostrar el mensaje de error o éxito -->
+        {% if mensaje %}
+            <div class="mensaje">
+                <p>{{ mensaje }}</p>
+            </div>
+        {% endif %}
+
+        <!-- Mostrar detalles de la cuenta si la tarjeta es válida -->
+        {% if cuenta %}
+            <div class="cuenta-detalles">
+                <h2>Detalles de la Cuenta</h2>
+                <p><strong>Tarjeta:</strong> {{ cuenta.tarjeta }}</p>
+                <p><strong>Fecha de Expiración:</strong> {{ cuenta.fecha }}</p>
+                <p><strong>Balance:</strong> {{ cuenta.balance }}</p>
+                <p><strong>Límite:</strong> {{ cuenta.limite }}</p>
+            </div>
+
+            <!-- Formulario para retirar dinero -->
+            <form action="/operacion" method="POST">
+                <input type="hidden" name="tarjeta" value="{{ cuenta.tarjeta }}">
+                <label for="nip">NIP:</label><br>
+                <input type="password" id="nip" name="nip" required><br><br>
+                <label for="monto">Monto a retirar:</label><br>
+                <input type="number" id="monto" name="monto" step="0.01" required><br><br>
+                <button type="submit">Retirar</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
+

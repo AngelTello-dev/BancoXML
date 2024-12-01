@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operación - Banco</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .contenedor {
+            width: 80%;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .mensaje {
+            font-size: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e0f7e0;
+            border-radius: 5px;
+            color: #388e3c;
+            border: 1px solid #4CAF50;
+        }
+        .cuentas {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+        .cuentas li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .boton-regresar {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .boton-regresar:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Operación en Banco</h1>
+
+        <!-- Mostrar el mensaje -->
+        <div class="mensaje">
+            <p>{{ mensaje }}</p>
+        </div>
+
+        <!-- Si hay cuentas, mostrar una lista -->
+        {% if cuentas %}
+            <h2>Detalles de las Cuentas</h2>
+            <ul class="cuentas">
+                {% for cuenta in cuentas %}
+                    <li>
+                        <strong>ID de la cuenta:</strong> {{ cuenta.id }}<br>
+                        <strong>Saldo:</strong> {{ cuenta.saldo }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay cuentas disponibles.</p>
+        {% endif %}
+
+        <!-- Botón para regresar a la página principal -->
+        <a href="{{ url_for('index') }}">
+            <button class="boton-regresar">Regresar a la página principal</button>
+        </a>
+    </div>
+</body>
+</html>
